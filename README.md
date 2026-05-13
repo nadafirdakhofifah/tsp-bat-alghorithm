@@ -166,6 +166,6 @@ f(\pi)=\sum_{i=1}^{n-1} d_{\pi(i)\pi(i+1)} + d_{\pi(n)\pi(1)}
 
 ## 👨‍💻 Author
 
-Final Project Teknik Optimasi 
-Nada Firda Khofifah
+Final Project Teknik Optimasi<br>
+Nada Firda Khofifah<br>
 Semester 6 — Informatika
