@@ -2,8 +2,8 @@ import streamlit as st
 
 from src.preprocessing import (
     load_dataset,
-    get_instances,
-    preprocessing_pipeline
+    extract_coordinates,
+    create_distance_matrix
 )
 
 from src.bat_algorithm import BatAlgorithm
@@ -13,27 +13,16 @@ from src.visualization import (
     plot_convergence
 )
 
-# =====================================
-# PAGE CONFIG
-# =====================================
 
 st.set_page_config(page_title='TSP Bat Algorithm')
 
 st.title('Travelling Salesman Problem')
 st.subheader('Bat Algorithm Optimization')
 
-# =====================================
-# FILE UPLOAD
-# =====================================
-
 uploaded_file = st.file_uploader(
     'Upload CSV Dataset',
     type=['csv']
 )
-
-# =====================================
-# PARAMETER
-# =====================================
 
 iterations = st.slider(
     'Jumlah Iterasi',
@@ -49,34 +38,18 @@ population = st.slider(
     20
 )
 
-# =====================================
-# MAIN PROCESS
-# =====================================
 
 if uploaded_file is not None:
 
-    # Load dataset
     df = load_dataset(uploaded_file)
 
     st.subheader('Dataset Preview')
     st.dataframe(df)
 
-    # Ambil daftar instance
-    instances = get_instances(df)
+    coords = extract_coordinates(df)
 
-    # Select instance
-    selected_instance = st.selectbox(
-        "Pilih Instance TSP",
-        instances
-    )
+    distance_matrix = create_distance_matrix(coords)
 
-    # Preprocessing otomatis
-    coords, distance_matrix = preprocessing_pipeline(
-    df,
-    selected_instance
-    )
-
-    # Run Optimization
     if st.button('Run Optimization'):
 
         ba = BatAlgorithm(
@@ -85,24 +58,22 @@ if uploaded_file is not None:
             iterations=iterations
         )
 
-        best_route, best_distance, history = ba.optimize()
+        best_route, best_distance, history, logs = ba.optimize()
 
         st.success('Optimization Completed')
-
-        # =====================================
-        # OUTPUT
-        # =====================================
 
         st.subheader('Best Route')
         st.write(best_route)
 
         st.subheader('Total Distance')
         st.write(round(best_distance, 2))
+        st.subheader("Optimization Progress")
 
-        # Route Visualization
+        for log in logs:
+            st.text(log)
+
         route_fig = plot_route(coords, best_route)
         st.pyplot(route_fig)
 
-        # Convergence Graph
         conv_fig = plot_convergence(history)
         st.pyplot(conv_fig)

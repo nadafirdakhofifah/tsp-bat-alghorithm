@@ -27,6 +27,7 @@ def plot_route(coords, route):
         ax=ax
     )
 
+
     return fig
 
 
