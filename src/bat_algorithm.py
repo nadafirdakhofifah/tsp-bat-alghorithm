@@ -6,7 +6,6 @@ np.random.seed(42)
 
 from math import exp
 
-
 class BatAlgorithm:
 
     def __init__(

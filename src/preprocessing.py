@@ -1,12 +1,9 @@
 import pandas as pd
 import numpy as np
 
-
 def load_dataset(uploaded_file):
     df = pd.read_csv(uploaded_file)
     return df
-
-
 
 def extract_coordinates(df):
     row = df.iloc[0]

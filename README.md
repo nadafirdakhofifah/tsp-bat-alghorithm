@@ -99,6 +99,7 @@ source env/bin/activate
 
 ```bash
 pip install -r requirements.txt
+pip install streamlit pandas numpy matplotlib networkx
 ```
 
 ---

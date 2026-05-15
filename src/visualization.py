@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 
-
-
 def plot_route(coords, route):
 
     G = nx.Graph()
@@ -27,10 +25,7 @@ def plot_route(coords, route):
         ax=ax
     )
 
-
     return fig
-
-
 
 def plot_convergence(history):
 

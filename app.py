@@ -7,6 +7,7 @@ from src.preprocessing import (
 )
 
 from src.bat_algorithm import BatAlgorithm
+from src.nearest_neighbor import NearestNeighbor
 
 from src.visualization import (
     plot_route,
@@ -17,7 +18,12 @@ from src.visualization import (
 st.set_page_config(page_title='TSP Bat Algorithm')
 
 st.title('Travelling Salesman Problem')
-st.subheader('Bat Algorithm Optimization')
+st.subheader('Bat Algorithm & Nearest Neighbor Optimization')
+
+algorithm = st.selectbox(
+    'Pilih Algoritma',
+    ['Bat Algorithm', 'Nearest Neighbor']
+)
 
 uploaded_file = st.file_uploader(
     'Upload CSV Dataset',
@@ -52,13 +58,33 @@ if uploaded_file is not None:
 
     if st.button('Run Optimization'):
 
-        ba = BatAlgorithm(
-            distance_matrix,
-            population_size=population,
-            iterations=iterations
-        )
+    # =====================================
+    # BAT ALGORITHM
+    # =====================================
 
-        best_route, best_distance, history, logs = ba.optimize()
+        if algorithm == 'Bat Algorithm':
+
+            ba = BatAlgorithm(
+                distance_matrix,
+                population_size=population,
+                iterations=iterations
+            )
+
+            best_route, best_distance, history, logs = (
+                ba.optimize()
+            )
+
+    # =====================================
+    # NEAREST NEIGHBOR
+    # =====================================
+
+        else:
+
+            nn = NearestNeighbor(distance_matrix)
+
+            best_route, best_distance, history, logs = (
+                nn.optimize()
+            )
 
         st.success('Optimization Completed')
 
