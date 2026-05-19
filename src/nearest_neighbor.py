@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class NearestNeighbor:
 
     def __init__(self, distance_matrix):

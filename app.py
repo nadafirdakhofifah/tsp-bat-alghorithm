@@ -14,7 +14,6 @@ from src.visualization import (
     plot_convergence
 )
 
-
 st.set_page_config(page_title='TSP Bat Algorithm')
 
 st.title('Travelling Salesman Problem')
@@ -89,7 +88,22 @@ if uploaded_file is not None:
         st.success('Optimization Completed')
 
         st.subheader('Best Route')
-        st.write(best_route)
+        # kembali ke kota awal
+        tour = best_route + [best_route[0]]
+
+        # tampilkan index
+        st.write("Index Route:")
+        st.success(" → ".join(map(str, tour)))
+
+        # ubah ke nama city
+        real_route = [
+            f"City_{city+1}"
+            for city in tour
+        ]
+
+        # tampilkan nama city
+        st.write("City Route:")
+        st.success(" → ".join(real_route))
 
         st.subheader('Total Distance')
         st.write(round(best_distance, 2))
@@ -103,3 +117,4 @@ if uploaded_file is not None:
 
         conv_fig = plot_convergence(history)
         st.pyplot(conv_fig)
+        
